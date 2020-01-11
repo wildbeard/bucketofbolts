@@ -1,9 +1,9 @@
 FROM python:3.7-alpine
 
-COPY ./start.sh /var/www/bucketofbolts/
+COPY ./start.sh /start.sh
 
-RUN chmod +x /var/www/bucketofbolts/start.sh
+RUN chmod +x /start.sh
 
 EXPOSE 80
 
-ENTRYPOINT [ "/var/www/bucketofbolts/start.sh" ]
+ENTRYPOINT [ "/start.sh" ]
