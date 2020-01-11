@@ -1,7 +1,8 @@
 # Bucket of Bolts API
 
 * Flask
-* MySql 8
+* MySql 8.0.13
+    * MySql 8.0.0 has an issue with `tx_isolation` still being used and not `transaction_isolation` causing SqlAlchemy errors. Upgrading to 8.0.13 resolved the issue.
 
 # Docker
 
