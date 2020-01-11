@@ -6,6 +6,6 @@ services:
       context: ./app
     container_name: app
     volumes:
-      - .:/var/www/app
+      - $APP_DIR:/var/www/bucketofbolts
     ports:
       - 80:5000

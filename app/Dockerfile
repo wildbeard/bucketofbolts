@@ -1,15 +1,9 @@
 FROM python:3.7-alpine
 
-COPY . /var/www/app
+COPY ./start.sh /var/www/bucketofbolts/
 
-WORKDIR /var/www/app
-
-RUN pip install -r requirements.txt
-
-RUN chmod +x /var/www/app/start.sh
+RUN chmod +x /var/www/bucketofbolts/start.sh
 
 EXPOSE 80
 
-# CMD [ "/var/www/app/start.sh" ]
-
-ENTRYPOINT [ "/var/www/app/start.sh" ]
+ENTRYPOINT [ "/var/www/bucketofbolts/start.sh" ]
