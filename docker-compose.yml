@@ -9,3 +9,25 @@ services:
       - $APP_DIR:/var/www/bucketofbolts
     ports:
       - 80:5000
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:8.0.0
+    container_name: mysql
+    ports:
+      - 4306:3306
+    restart: always
+    environment:
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_HOST: $MYSQL_HOST
+      MYSQL_PORT: $MYSQL_PORT
+    volumes:
+      - type: bind
+        source: mysql_data
+        target: "/var/lib/mysql"
+        volume:
+          nocopy: true
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
