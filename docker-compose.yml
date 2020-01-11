@@ -8,4 +8,4 @@ services:
     volumes:
       - .:/var/www/app
     ports:
-      - 80:80
+      - 80:5000

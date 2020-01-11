@@ -10,6 +10,6 @@ RUN chmod +x /var/www/app/start.sh
 
 EXPOSE 80
 
-CMD [ "/var/www/app/start.sh" ]
+# CMD [ "/var/www/app/start.sh" ]
 
-# ENTRYPOINT [ "sh start.sh" ]
+ENTRYPOINT [ "/var/www/app/start.sh" ]

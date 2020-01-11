@@ -2,7 +2,5 @@
 
 cd /var/www/app
 
-echo "In var/www/app"
-echo "Starting..."
-
-python bucketofbolts-api.py
+# can only access if --host=0.0.0.0 is set
+env FLASK_APP=bucketofbolts-api.py flask run --host=0.0.0.0
