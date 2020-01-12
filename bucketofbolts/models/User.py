@@ -1,11 +1,18 @@
-from sqlalchemy.ext.declarative import declarative_base
+from .BaseModel import BaseModel
 from sqlalchemy import Column, Integer, String
+from dataclasses import dataclass
 
-Base = declarative_base()
+@dataclass
+class User(BaseModel):
 
-class User(Base):
+    # Omitting a column here hides
+    # it from the json serialization
+    id: int
+    username: str
 
     __tablename__ = 'users'
+
+    protected_columns = [ 'password' ]
 
     id = Column(Integer, primary_key=True)
     username = Column(String)
@@ -13,11 +20,6 @@ class User(Base):
 
     def __init__(self, username, password):
         self.username = username
-        self.password = self.hash_pw(password)
-
-    def to_dict(self):
-        return {
-            c.name: getattr(self, c.name) for c in self.__table__.columns
-        }
+        self.password = password
 
     

@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
 import sqlalchemy
 import os
+import logging
 
 from models.User import User
+from models.Bolt import Bolt
 
 app = Flask(__name__)
 
@@ -18,8 +20,6 @@ Session = sqlalchemy.orm.sessionmaker()
 Session.configure(bind=db)
 session = Session()
 
-users = session.query(User).filter_by(id=1).first()
-
 @app.before_request
 def auth():
     json = request.json
@@ -28,21 +28,35 @@ def auth():
     else:
         token = request.headers.get('X-BoB-Token')
     
+    app.logger.info(token)
+
     if token is False or token is None:
         return jsonify({
             'status': 200,
-            'user': users.to_dict(),
             'message': 'Token must be provided'
+        })
+    elif token != '123':
+        return jsonify({
+            'status': 200,
+            'message': 'Unauthorized'
         })
 
 @app.route('/')
 def index():
-    return 'Hello, World! Updated123'
+    return 'Hello, World!'
 
-@app.route('/', methods=[ 'POST' ])
-def postIndex():
-    message = 'Hello, %s' % request.json.get('Token')
+@app.route('/users')
+def listUsers():
+    users = session.query(User).all()
     return jsonify({
         'status': 200,
-        'message': message
+        'data': users
+    })
+
+@app.route('/bolts')
+def listBolts():
+    bolts = session.query(Bolt).filter(Bolt.hardware_type).all()
+    return jsonify({
+        'status': 200,
+        'data': bolts
     })
