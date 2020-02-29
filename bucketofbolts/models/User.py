@@ -1,9 +1,10 @@
 from .BaseModel import BaseModel
+from .mixins.SoftDeletes import SoftDeleteMixin
 from sqlalchemy import Column, Integer, String
 from dataclasses import dataclass
 
 @dataclass
-class User(BaseModel):
+class User(SoftDeleteMixin, BaseModel):
 
     # Omitting a column here hides
     # it from the json serialization
@@ -12,13 +13,12 @@ class User(BaseModel):
 
     __tablename__ = 'users'
 
-    protected_columns = [ 'password' ]
-
     id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
 
     def __init__(self, username, password):
+        self.protected_columns = [ 'password' ]
         self.username = username
         self.password = password
 

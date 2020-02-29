@@ -5,10 +5,9 @@ Base = declarative_base()
 class BaseModel(Base):
 
     __abstract__ = True
-
-    # Protected columns would be hidden from
-    # the to_dict method
-    protected_columns = []
+    
+    def __init__(self):
+        self.protected_columns = []
 
     def to_dict(self):
         d = {}
